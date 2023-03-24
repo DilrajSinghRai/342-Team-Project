@@ -9,8 +9,14 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
+const serverURL = '';
+
  
  export default function ReviewFacility(){
+
+  const [facilityType, setFacilityType] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [review, setReview] = React.useState('');
 
   const opacityValue = 0.9;
 
@@ -59,6 +65,12 @@ import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
   
   });
 
+  React.useEffect(( )=> {
+    console.log(facilityType)
+    console.log(review)
+    console.log(name)
+  })
+
 const FacilitySelection = (props) =>{
   return(
     
@@ -67,16 +79,23 @@ const FacilitySelection = (props) =>{
         <Select
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
+
+          onChange={(event) => {
+            setFacilityType(event.target.value)
+            console.log(event.target.value)
+          }
+
+          }
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>PAC  </MenuItem>
-          <MenuItem value={20}>CIF </MenuItem>
-          <MenuItem value={20}>SLC  </MenuItem>
-          <MenuItem value={20}>DC  </MenuItem>
-          <MenuItem value={20}>DP  </MenuItem>
-          <MenuItem value={30}>E7  </MenuItem>
+          <MenuItem value="PAC">PAC  </MenuItem>
+          <MenuItem value= "CIF">CIF </MenuItem>
+          <MenuItem value="SLC">SLC  </MenuItem>
+          <MenuItem value="DC">DC  </MenuItem>
+          <MenuItem value="DP">DP  </MenuItem>
+          <MenuItem value="E7">E7  </MenuItem>
         </Select>
         <FormHelperText error>{props.Error ? "Please select a facility" : ""}</FormHelperText>
       </FormControl>
@@ -86,18 +105,45 @@ const FacilitySelection = (props) =>{
 
 
 
-  const FacilityFilter = (props) => {
-    return(
 
-      <TextField
-        id="outlined-multiline-static"
-        label="Enter Your Review"
-        variant="outlined"
-        error={props.Error ? true : false}
-        helperText={props.Error ? "Please enter your review" : "Up to 200 Characters"}
-      />
-    )
+  const handleSubmit = () => {
+
+    addFacility()
+
+    console.log("test")
+
+
   }
+
+  const addFacility = () => {
+    callApiAddFacility()
+      .then(res => {
+        var parsed = JSON.parse(res.express);
+      })
+
+
+  }
+
+  const callApiAddFacility = async () => {
+
+    const url = serverURL + "/api/addFacility"
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify( {name: name, facilityType: facilityType, review: review})
+
+    });
+    const body = await response.json();
+    if (response.status != 200) throw Error(body.message);
+    return body;
+
+  }
+
+
+  
 
 
   
@@ -119,7 +165,11 @@ return (
   style={{margin: "100px"}}
   >
     <FacilitySelection></FacilitySelection>
-    <FacilityFilter></FacilityFilter>
+    <NameEnter setName  = {setName}></NameEnter>
+    <FacilityFilter setReview = {setReview}></FacilityFilter>
+
+    <Button onClick={handleSubmit}>  Submit</Button>
+  
   </Grid>
     
     </div>
@@ -127,12 +177,47 @@ return (
     </div>
   )
 
+  
 
 
  }
 
+ const NameEnter = (props) => {
+  return(
 
+    <TextField
+      id="outlined-multiline-static"
+      label="Enter Your Name"
+      variant="outlined"
+      helperText={props.Error ? "Please enter your Name" :""}
 
+      onChange={(event) => {
+        props.setName(event.target.value)
+        console.log(event.target.value)
+      }}
+    />
+  )
+}
+
+const FacilityFilter = (props) => {
+  return(
+
+    <TextField
+      id="outlined-multiline-static"
+      label="Enter Your Review"
+      variant="outlined"
+      error={props.Error ? true : false}
+      helperText={props.Error ? "Please enter your review" : "Up to 200 Characters"}
+
+      onChange={(event) => {
+        props.setReview(event.target.value)
+        console.log(event.target.value)
+      }}
+
+      
+    />
+  )
+}
 
 
 

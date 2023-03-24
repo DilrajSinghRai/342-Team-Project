@@ -1,8 +1,10 @@
 import Grid from "@material-ui/core/Grid";
+import React, { useState } from 'react'
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import {FormControl, MenuItem, Select, InputLabel, TextField, RadioGroup, FormLabel, Radio, FormControlLabel, Button, FormHelperText} from "@material-ui/core/"
-import React from "react"; 
+import {FormControl, MenuItem, Select, InputLabel, CardContent, TextField, RadioGroup, FormLabel, Radio, FormControlLabel, Button, FormHelperText} from "@material-ui/core/"
+
+
 import NavBar from "../Navigation/Nav";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles"; 
@@ -63,8 +65,16 @@ const styles = theme => ({
 const serverURL = ''
  export default function Facilities(){
 
+  const [facilityInfo, setfacilityInfo] = useState([])
+
 React.useEffect(() => {
   loadFacilities();
+
+})
+
+React.useEffect(() => {
+
+  console.log(facilityInfo)
 })
 
 const loadFacilities = () => {
@@ -73,7 +83,7 @@ const loadFacilities = () => {
   .then(res => {
       var parsed = JSON.parse(res.express);
       console.log(parsed)
-      DisplayUpdates(parsed)
+      setfacilityInfo(parsed)
     }
   ).then(console.log())
 }
@@ -95,7 +105,40 @@ const DisplayUpdates = (facilityList) =>{
   return(
     <div>
 
-      {facilityList.facilityID}
+{facilityInfo.map((item) => {
+            return (
+              <div>
+
+
+                <br></br>
+
+
+                <CardContent>
+
+          <Typography variant="h5">
+            Name: {item.facilityType}
+          </Typography>
+          <Typography variant="h6">
+            Hours: {item.hours}
+          </Typography>
+          <Typography variant="h6" component="div">
+            Gender Status: {item.genderExclusivity}
+          </Typography>
+          <Typography variant="h6">
+            Description: {item.description}
+            <br />
+          </Typography>
+          
+
+        </CardContent>
+
+               
+
+
+                <br></br>
+              </div>
+            )
+          })}
     </div>
   )
   }
@@ -129,7 +172,7 @@ const FacilitySelection = (props) =>{
 
   const OpenHouseSports = (props) =>{
     return(
-    <FormControl style={{marginBottom: "400px", marginLeft:" 300px", width: "30%"}}>
+    <FormControl style={{marginBottom: "400px", marginLeft:" 50px", width: "30%"}}>
           <InputLabel id="movieValue">Select A Open House Sport</InputLabel>
           <Select
             displayEmpty
@@ -152,11 +195,50 @@ const FacilitySelection = (props) =>{
 
 
   
-}
+  }
+    const StudyRoomName = (props) =>{
+      return(
+      <FormControl style={{marginBottom: "200px", marginLeft:" 300px", width: "30%"}}>
+            <InputLabel id="movieValue">Select what study room </InputLabel>
+            <Select
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Study Room Pac</MenuItem>
+              <MenuItem value={20}>Study Room SLC</MenuItem>
+            </Select>
+            <FormHelperText error>{props.Error ? "Please select the study room" : ""}</FormHelperText>
+          </FormControl>
+      )
+      }
+
+
+
+const StudyRoomStatus = (props) =>{
+  return(
+  <FormControl style={{marginTop: "200px", marginRight:"400px", width: "30%"}}>
+        <InputLabel id="movieValue">Select the status of the study room </InputLabel>
+        <Select
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Open</MenuItem>
+          <MenuItem value={20}>Closed</MenuItem>
+        </Select>
+        <FormHelperText error>{props.Error ? "Please select if it is closed or open" : ""}</FormHelperText>
+      </FormControl>
+  )
+  }
 
 const FacilityTime = (props) =>{
   return(
-  <FormControl style={{marginBottom: "300px", marginLeft:" 200px", width: "30%"}}>
+  <FormControl style={{marginBottom: "300px", marginLeft:" 50px", width: "30%"}}>
     
         <InputLabel id="movieValue">Select A Time Period</InputLabel>
         <Select
@@ -192,7 +274,10 @@ return (
     <div><FacilitySelection></FacilitySelection>
     <OpenHouseSports></OpenHouseSports>
     <FacilityTime></FacilityTime>
-    
+    <StudyRoomStatus></StudyRoomStatus>
+   
+   
+    <StudyRoomName></StudyRoomName>
     <DisplayUpdates>
       
       </DisplayUpdates></div>

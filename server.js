@@ -22,7 +22,7 @@ app.post('/api/loadUserSettings', (req, res) => {
 	let sql = `SELECT mode FROM user WHERE userID = ?`;
 	console.log(sql);
 	let data = [userID];
-	console.log(data);
+	console.log("API REACHED");
 
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
@@ -59,6 +59,29 @@ app.post('/api/loadFacilityInfo', (req, res) => {
 	connection.end();
 });  
 
+app.post('/api/addFacility', (req,res) => {
+
+	let connection = mysql.createConnection(config);
+	let sql = `INSERT INTO reviewFacility (facilityName, name, review) VALUES
+
+	 ("${req.body.facilityType}","${req.body.name}", '${req.body.review}');`
+
+	 console.log(sql)
+
+
+	connection.query(sql,(error, results, fields) => {
+		if (error){
+			return console.error(error.message);
+		}
+		let string = JSON.stringify(results)
+		res.send({express: string})
+
+	});
+
+	connection.end();
+
+
+});
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
