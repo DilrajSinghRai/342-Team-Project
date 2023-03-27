@@ -8,6 +8,7 @@ import history from '../Navigation/history';
 import landing from '../Landing'
 import Link from '@material-ui/core/Link';
 import NavBar from '../Navigation/Nav';
+import background from "/Users/dilrajrai/Documents/GitHub/342-Team-Project/client/src/pacgym.png";
 
 const serverURL = ""; //enable for dev mode
 
@@ -17,10 +18,13 @@ const fetch = require("node-fetch");
 const opacityValue = 0.9;
 
 const theme = createTheme({
+  typography: {
+    color: "white"
+  },
   palette: {
     type: 'dark',
     background: {
-      default: "#000000"
+      default: "#FFFFFF"
     },
     primary: {
       main: "#FFFFAA",
@@ -34,7 +38,7 @@ const theme = createTheme({
 const styles = theme => ({
   root: {
     body: {
-      backgroundColor: "#000000",
+      backgroundColor: "#FFFFFF",
       opacity: opacityValue,
       overflow: "hidden",
     },
@@ -63,16 +67,11 @@ const styles = theme => ({
   
 const Landing = () => {
     return (
-        <div>
-          
-          <MuiThemeProvider theme = {theme}>
-
+      <MuiThemeProvider theme={theme}>
+        <div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
             <NavBar></NavBar>
             
 <CssBaseline />
-           
-            
-
             <Grid
         container
         direction="column"
@@ -87,8 +86,8 @@ const Landing = () => {
         </Typography>
         
             </Grid>
-            </MuiThemeProvider>
         </div>
+        </MuiThemeProvider>
     )
 }
 export default Landing;
