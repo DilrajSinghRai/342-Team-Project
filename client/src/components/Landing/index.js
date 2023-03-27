@@ -8,7 +8,7 @@ import history from '../Navigation/history';
 import landing from '../Landing'
 import Link from '@material-ui/core/Link';
 import NavBar from '../Navigation/Nav';
-import background from "/Users/dilrajrai/Documents/GitHub/342-Team-Project/client/src/pacgym.png";
+import background from "C:/Users/prana/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
 
 const serverURL = ""; //enable for dev mode
 

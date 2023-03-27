@@ -8,7 +8,7 @@ import {FormControl, MenuItem, Select, InputLabel, CardContent, TextField, Radio
 import NavBar from "../Navigation/Nav";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles"; 
-import background from "/Users/dilrajrai/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
+import background from "C:/Users/prana/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
 
 const fetch = require("node-fetch");
 

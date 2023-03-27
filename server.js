@@ -83,5 +83,29 @@ app.post('/api/addFacility', (req,res) => {
 
 });
 
+app.post('/api/addFilter', (req,res) => {
+
+	let connection = mysql.createConnection(config);
+	let sql = `INSERT INTO filter (facility, sport, day) VALUE
+
+	 ("${req.body.facilityName}","${req.body.sport}", '${req.body.day}');`
+
+	 console.log(sql)
+
+
+	connection.query(sql,(error, results, fields) => {
+		if (error){
+			return console.error(error.message);
+		}
+		let string = JSON.stringify(results)
+		res.send({express: string})
+
+	});
+
+	connection.end();
+
+
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
 //app.listen(port, '129.97.25.211'); //for the deployed version, specify the IP address of the server

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import background from "/Users/dilrajrai/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
+import background from "C:/Users/prana/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
 
 const serverURL = '';
 
