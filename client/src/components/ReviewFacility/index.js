@@ -182,7 +182,6 @@ return (
 
   
 
-
  }
 
  const NameEnter = (props) => {
