@@ -72,6 +72,7 @@ export default function Filter(){
   const [facilityName, setFacilityType] = React.useState('');
   const [sport, setSport] = React.useState('');
   const [day, setDay] = React.useState('');
+  const [data, setData] = React.useState([]);
 
   React.useEffect(( )=> {
     console.log(facilityName)
@@ -166,6 +167,8 @@ const FacilitySelection = (props) =>{
 
   const handleSubmit = () => {
     addFacility()
+    loadfilterData()
+    writeFilterData()
     console.log("test")
   }
 
@@ -194,6 +197,76 @@ const FacilitySelection = (props) =>{
 
   }
 
+  const loadfilterData = () => {
+    
+    callApiLoadFilterData()
+    .then(res => {
+        var parsed = JSON.parse(res.express);
+        console.log(parsed)
+        setData(parsed)
+      }
+    ).then(console.log())
+  }
+  
+  const callApiLoadFilterData = async (props) => {
+    
+    const url = serverURL + "/api/loadFilterData";
+    const response = await fetch(url, {method: "POST"
+  
+    }
+    )
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    console.log(body)
+    return body;
+  }
+  const DisplayUpdates = (dataList) => {
+    console.log("we here")
+    return (
+      <div>
+        {data.map((item) => {
+          console.log(item.facilityName)
+          return (
+            <div>
+              <br></br>
+              <CardContent>
+                <Typography variant="h5">
+                  Name: {item.facilityName}
+                </Typography>
+              </CardContent>
+              <br></br>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  const writeFilterData = () => {
+    console.log("write")
+    callApiAddFilterData()
+      .then(res => {
+        var parsed = JSON.parse(res.express);
+      })
+  }
+
+  const callApiAddFilterData = async () => {
+
+    const url = serverURL + "/api/writeFilterData"
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({facilityName: facilityName, sport: sport, day: day})
+
+    });
+    const body = await response.json();
+    if (response.status != 200) throw Error(body.message);
+    return body;
+
+  }
 ///////ACTUAL DISPLAY
 return (
 <MuiThemeProvider theme={theme}>
@@ -216,13 +289,14 @@ return (
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 3 , ml: 70, mb: 30}}>
+      <Box sx={{ mt: 3 , ml: 70, mb: 10}}>
         <Button onClick={handleSubmit}>  Submit</Button>
+        
       </Box>
 
       <Card sx={{ width: 1100, ml: 6 }} raised="true">
         <CardContent>
-      
+        <DisplayUpdates></DisplayUpdates>
         </CardContent>
       </Card>
 
