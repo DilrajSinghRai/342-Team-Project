@@ -62,7 +62,7 @@ const opacityValue = 0.9;
   
   });
 
-export default function ReviewFacility(){
+export default function Filter(){
 
   const [facilityType, setFacilityType] = React.useState('');
   const [name, setName] = React.useState('');
@@ -110,7 +110,7 @@ const FacilitySelection = (props) =>{
 
 
   const handleSubmit = () => {
-    console.log("test")
+
     addFacility()
 
     console.log("test")
@@ -128,6 +128,7 @@ const FacilitySelection = (props) =>{
   }
 
   const callApiAddFacility = async () => {
+
     const url = serverURL + "/api/addFacility"
 
     const response = await fetch(url, {
