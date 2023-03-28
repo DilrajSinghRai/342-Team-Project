@@ -64,7 +64,8 @@ app.post('/api/loadFilterData', (req, res) => {
 	let connection = mysql.createConnection(config);
 	console.log('called')
 
-	let sql = 'SELECT * FROM d3rai.filterData';
+	let sql = 'SELECT openTimes FROM d3rai.filterData WHERE facilityName = ?, sport = ?, day = ?';
+	let data = [req.body.facilityName, req.body.sport, req.body.day];
 	
 
 	connection.query(sql, (error, results, fields) => {
@@ -128,25 +129,6 @@ app.post('/api/addFilter', (req,res) => {
 	connection.end();
 
 
-});
-
-app.post('/api/writeFilterData', (req,res) => {
-
-	let connection = mysql.createConnection(config);
-	let sql = `UPDATE filterDataWrite 
-	SET openTimes = (SELECT openTimes FROM filterData) WHERE facility IN 
-	(SELECT facility FROM filter WHERE facility = "${req.body.facilityName}" AND sport = "${req.body.sport}" AND day = "${req.body.day}");`
-
-	 console.log(sql)
-
-	connection.query(sql,(error, results, fields) => {
-		if (error){
-			return console.error(error.message);
-		}
-		let string = JSON.stringify(results)
-		res.send({express: string})
-	});
-	connection.end();
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version

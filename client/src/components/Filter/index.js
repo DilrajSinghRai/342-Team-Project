@@ -168,8 +168,9 @@ const FacilitySelection = (props) =>{
   const handleSubmit = () => {
     addFacility()
     loadfilterData()
-    writeFilterData()
-    console.log("test")
+    console.log(day)
+    console.log(facilityName)
+    console.log(sport)
   }
 
   const addFacility = () => {
@@ -203,7 +204,7 @@ const FacilitySelection = (props) =>{
     .then(res => {
         var parsed = JSON.parse(res.express);
         console.log(parsed)
-        setData(parsed)
+        setData(parsed[3].openTimes)
       }
     ).then(console.log())
   }
@@ -215,58 +216,38 @@ const FacilitySelection = (props) =>{
   
     }
     )
+    body: JSON.stringify({
+      facilityName: facilityName,
+      sport: sport,
+      day: day,
+    })
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     console.log(body)
     return body;
   }
+
   const DisplayUpdates = (dataList) => {
     console.log("we here")
     return (
       <div>
-        {data.map((item) => {
-          console.log(item.facilityName)
+        {/* {data.map((item) => { */}
           return (
             <div>
               <br></br>
               <CardContent>
                 <Typography variant="h5">
-                  Name: {item.facilityName}
+                  Name: {data}
                 </Typography>
               </CardContent>
               <br></br>
             </div>
           )
-        })}
+        
       </div>
     )
   }
 
-  const writeFilterData = () => {
-    console.log("write")
-    callApiAddFilterData()
-      .then(res => {
-        var parsed = JSON.parse(res.express);
-      })
-  }
-
-  const callApiAddFilterData = async () => {
-
-    const url = serverURL + "/api/writeFilterData"
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({facilityName: facilityName, sport: sport, day: day})
-
-    });
-    const body = await response.json();
-    if (response.status != 200) throw Error(body.message);
-    return body;
-
-  }
 ///////ACTUAL DISPLAY
 return (
 <MuiThemeProvider theme={theme}>

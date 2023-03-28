@@ -9,6 +9,11 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import background from "C:/Users/prana/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 
 const serverURL = '';
 
@@ -77,7 +82,7 @@ export default function ReviewFacility(){
 const FacilitySelection = (props) =>{
   return(
     
-    <FormControl style={{marginBottom: "50px", width: "30%"}}>
+    <FormControl style={{marginLeft: "50px", marginTop: "15px", width: "100%"}}>
         <InputLabel id="movieValue">Select A Facility</InputLabel>
         <Select
           displayEmpty
@@ -153,31 +158,50 @@ const FacilitySelection = (props) =>{
 
 ///////ACTUAL DISPLAY
 return (
-
-
-
 <MuiThemeProvider theme={theme}>
-<div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}><NavBar></NavBar>
-    <div>
-    <Grid
-    container
-  direction="column"
-  justifyContent="flex-start"
-  alignItems="flex-start"
-  style={{margin: "100px"}}
-  >
-    <FacilitySelection></FacilitySelection>
-    <NameEnter setName  = {setName}></NameEnter>
-    <FacilityFilter setReview = {setReview}></FacilityFilter>
+<NavBar></NavBar>
+<div></div>
+<Container component = "main" maxWidth = "lg"  style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
+  <CssBaseline />
+    <Grid container justifyContent="center">
 
-    <Button onClick={handleSubmit}>  Submit</Button>
-  
-  </Grid>
-    
-    </div>
-   
-    </div>
-    </MuiThemeProvider>
+      <Grid item xs = "2">
+        <FacilitySelection></FacilitySelection>
+      </Grid>
+
+      <Grid item xs = "2">
+        <NameEnter setName  = {setName}></NameEnter>
+      </Grid>
+
+      <Grid item xs>
+        <FacilityFilter setReview = {setReview}></FacilityFilter>
+      </Grid>
+
+      <Box sx={{ mt: 3 , ml: 17, mb : 5, border: 1}}>
+        <Button onClick={handleSubmit}>  Submit</Button>
+      </Box>
+
+      <Card sx={{ width: 1100, ml: 6 , mt: 15}} raised="true">
+        <CardContent>
+          <Typography>Maintenance</Typography>
+        </CardContent>
+      </Card>
+
+      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true">
+        <CardContent>
+          <Typography>Review</Typography>
+        </CardContent>
+      </Card>
+
+      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true">
+        <CardContent>
+          <Typography>Concerns and Questions</Typography>
+        </CardContent>
+      </Card>
+
+    </Grid>
+  </Container>
+  </MuiThemeProvider>
   )
 
   
@@ -186,12 +210,12 @@ return (
 
  const NameEnter = (props) => {
   return(
-
     <TextField
       id="outlined-multiline-static"
       label="Enter Your Name"
       variant="outlined"
       helperText={props.Error ? "Please enter your Name" :""}
+      style={{marginLeft: "75px", marginTop: "15px", width: "100%"}}
 
       onChange={(event) => {
         props.setName(event.target.value)
@@ -210,6 +234,7 @@ const FacilityFilter = (props) => {
       variant="outlined"
       error={props.Error ? true : false}
       helperText={props.Error ? "Please enter your review" : "Up to 200 Characters"}
+      style={{marginLeft: "100px", marginTop: "15px", width: "100%" }}
 
       onChange={(event) => {
         props.setReview(event.target.value)
