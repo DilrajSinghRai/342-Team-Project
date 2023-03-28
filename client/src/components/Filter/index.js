@@ -18,9 +18,6 @@ import CardContent from '@mui/material/CardContent';
 const serverURL = '';
 
 const theme = createTheme({
-  typography: {
-    color: "black"
-  },
   palette: {
     type: 'dark',
     background: {
@@ -83,7 +80,7 @@ export default function Filter(){
 const FacilitySelection = (props) =>{
   return(
     
-    <FormControl style={{marginLeft: "20px", marginTop: "15px", width: "90%"}}>
+    <FormControl style={{marginLeft: "20px", marginTop: "30px", width: "90%"}}>
         <InputLabel id="movieValue">Select A Facility</InputLabel>
         <Select
           displayEmpty
@@ -109,7 +106,7 @@ const FacilitySelection = (props) =>{
 
   const DaySelection = (props) =>{
     return(
-      <FormControl style={{marginLeft: "10px", marginTop: "15px", width: "90%"}}>
+      <FormControl style={{marginLeft: "10px", marginTop: "30px", width: "90%"}}>
           <InputLabel id="movieValue">Select A Day</InputLabel>
           <Select
             displayEmpty
@@ -140,7 +137,7 @@ const FacilitySelection = (props) =>{
 
   const SportSelection = (props) => {
     return (
-      <FormControl style={{marginTop: "15px", width: "90%" }}>
+      <FormControl style={{marginTop: "30px", width: "90%" }}>
         <InputLabel id="movieValue">Select A Sport</InputLabel>
         <Select
           displayEmpty
@@ -227,32 +224,12 @@ const FacilitySelection = (props) =>{
     return body;
   }
 
-  const DisplayUpdates = (dataList) => {
-    console.log("we here")
-    return (
-      <div>
-        {/* {data.map((item) => { */}
-          return (
-            <div>
-              <br></br>
-              <CardContent>
-                <Typography variant="h5">
-                  Name: {data}
-                </Typography>
-              </CardContent>
-              <br></br>
-            </div>
-          )
-        
-      </div>
-    )
-  }
-
 ///////ACTUAL DISPLAY
 return (
 <MuiThemeProvider theme={theme}>
 <NavBar></NavBar>
-  <Container component = "main" maxWidth = "lg" disableGutters = "true" style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
+<div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
+  <Container component = "main" maxWidth = "lg" disableGutters = "true" style = {{backgroundColor: '#000000'}}>
     <CssBaseline />
 
       <Grid container justifyContent="center">
@@ -270,18 +247,45 @@ return (
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 3 , ml: 70, mb: 10}}>
+      <Box sx={{ mt: 5 , mr: 70, ml: 70, mb: 10, border: 1}}>
         <Button onClick={handleSubmit}>  Submit</Button>
         
       </Box>
 
-      <Card sx={{ width: 1100, ml: 6 }} raised="true">
+      <Card sx={{ width: 1100, ml: 6 }} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
-        <DisplayUpdates></DisplayUpdates>
+          <Grid container justifyContent="center">
+
+            <Grid item xs="12">
+              <Typography variant="h5">
+                Facility: {facilityName}
+              </Typography>
+            </Grid>
+
+            <Grid item xs="12">
+              <Typography variant="h5">
+                Day: {day}
+              </Typography>
+            </Grid>
+
+            <Grid item xs="12">
+              <Typography variant="h5">
+                Sport: {sport}
+              </Typography>
+            </Grid>
+
+            <Grid item xs="12">
+              <Typography variant="h5">
+                Open Times: {data}
+              </Typography>
+            </Grid>
+
+          </Grid>
         </CardContent>
       </Card>
 
   </Container>
+  </div>
     </MuiThemeProvider>
   )
  }
