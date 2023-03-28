@@ -72,17 +72,19 @@ export default function ReviewFacility(){
   const [facilityType, setFacilityType] = React.useState('');
   const [name, setName] = React.useState('');
   const [review, setReview] = React.useState('');
+  const [reviewType, setReviewType] = React.useState('');
 
   React.useEffect(( )=> {
     console.log(facilityType)
     console.log(review)
     console.log(name)
+    console.log(reviewType)
   })
 
 const FacilitySelection = (props) =>{
   return(
     
-    <FormControl style={{marginLeft: "50px", marginTop: "15px", width: "100%"}}>
+    <FormControl style={{marginLeft: "50px", marginTop: "30px", width: "100%"}}>
         <InputLabel id="movieValue">Select A Facility</InputLabel>
         <Select
           displayEmpty
@@ -110,17 +112,37 @@ const FacilitySelection = (props) =>{
   )
   }
 
-
-
-
-
+  const ReviewTypeSelection = (props) =>{
+    return(
+      
+      <FormControl style={{marginLeft: "70px", marginTop: "30px", width: "100%"}}>
+          <InputLabel id="movieValue">What are you submitting?</InputLabel>
+          <Select
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+  
+            onChange={(event) => {
+              setReviewType(event.target.value)
+              console.log(event.target.value)
+            }
+  
+            }
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="Maintenance">Maintenance  </MenuItem>
+            <MenuItem value= "Review">Review </MenuItem>
+            <MenuItem value="Concerns and Questions">Concerns and Questions  </MenuItem>
+          </Select>
+          <FormHelperText error>{props.Error ? "Please enter your review type" : ""}</FormHelperText>
+        </FormControl>
+    )
+    }
   const handleSubmit = () => {
     console.log("test")
     addFacility()
-
     console.log("test")
-
-
   }
 
   const addFacility = () => {
@@ -128,8 +150,6 @@ const FacilitySelection = (props) =>{
       .then(res => {
         var parsed = JSON.parse(res.express);
       })
-
-
   }
 
   const callApiAddFacility = async () => {
@@ -149,24 +169,21 @@ const FacilitySelection = (props) =>{
 
   }
 
-
-  
-
-
-  
-
-
 ///////ACTUAL DISPLAY
 return (
 <MuiThemeProvider theme={theme}>
 <NavBar></NavBar>
-<div></div>
-<Container component = "main" maxWidth = "lg"  style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
+<div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
+<Container component = "main" maxWidth = "lg"  style = {{backgroundColor : "#000000"}}>
   <CssBaseline />
     <Grid container justifyContent="center">
 
       <Grid item xs = "2">
         <FacilitySelection></FacilitySelection>
+      </Grid>
+
+      <Grid item xs = "2">
+        <ReviewTypeSelection setName  = {setFacilityType}></ReviewTypeSelection>
       </Grid>
 
       <Grid item xs = "2">
@@ -177,23 +194,23 @@ return (
         <FacilityFilter setReview = {setReview}></FacilityFilter>
       </Grid>
 
-      <Box sx={{ mt: 3 , ml: 17, mb : 5, border: 1}}>
+      <Box sx={{ mt: 5 , ml: 17, mb : 5, border: 1}}>
         <Button onClick={handleSubmit}>  Submit</Button>
       </Box>
 
-      <Card sx={{ width: 1100, ml: 6 , mt: 15}} raised="true">
+      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
           <Typography>Maintenance</Typography>
         </CardContent>
       </Card>
 
-      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true">
+      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
           <Typography>Review</Typography>
         </CardContent>
       </Card>
 
-      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true">
+      <Card sx={{ width: 1100, ml: 6 , mt: 5, mb: 2}} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
           <Typography>Concerns and Questions</Typography>
         </CardContent>
@@ -201,6 +218,7 @@ return (
 
     </Grid>
   </Container>
+  </div>
   </MuiThemeProvider>
   )
 
@@ -215,7 +233,7 @@ return (
       label="Enter Your Name"
       variant="outlined"
       helperText={props.Error ? "Please enter your Name" :""}
-      style={{marginLeft: "75px", marginTop: "15px", width: "100%"}}
+      style={{marginLeft: "80px", marginTop: "30px", width: "100%"}}
 
       onChange={(event) => {
         props.setName(event.target.value)
@@ -234,7 +252,7 @@ const FacilityFilter = (props) => {
       variant="outlined"
       error={props.Error ? true : false}
       helperText={props.Error ? "Please enter your review" : "Up to 200 Characters"}
-      style={{marginLeft: "100px", marginTop: "15px", width: "100%" }}
+      style={{marginLeft: "100px", marginTop: "30px", width: "100%" }}
 
       onChange={(event) => {
         props.setReview(event.target.value)

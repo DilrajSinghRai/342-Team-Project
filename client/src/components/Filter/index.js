@@ -207,7 +207,6 @@ const FacilitySelection = (props) =>{
   }
   
   const callApiLoadFilterData = async (props) => {
-    
     const url = serverURL + "/api/loadFilterData";
     const response = await fetch(url, {method: "POST"
   
