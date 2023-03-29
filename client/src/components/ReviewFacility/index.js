@@ -73,6 +73,7 @@ export default function ReviewFacility(){
   const [name, setName] = React.useState('');
   const [review, setReview] = React.useState('');
   const [reviewType, setReviewType] = React.useState('');
+  const [randomReview, setRandomReview] = React.useState([]);
 
   React.useEffect(( )=> {
     console.log(facilityType)
@@ -94,7 +95,6 @@ const FacilitySelection = (props) =>{
             setFacilityType(event.target.value)
             console.log(event.target.value)
           }
-
           }
         >
           <MenuItem value="">
@@ -140,9 +140,8 @@ const FacilitySelection = (props) =>{
     )
     }
   const handleSubmit = () => {
-    console.log("test")
-    addFacility()
-    console.log("test")
+    addFacility(review)
+    console.log(randomReview)
   }
 
   const addFacility = () => {
@@ -160,7 +159,7 @@ const FacilitySelection = (props) =>{
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify( {name: name, facilityType: facilityType, review: review})
+      body: JSON.stringify( {name: name, facilityType: facilityType, review: review, reviewType: reviewType})
 
     });
     const body = await response.json();
@@ -183,7 +182,7 @@ return (
       </Grid>
 
       <Grid item xs = "2">
-        <ReviewTypeSelection setName  = {setFacilityType}></ReviewTypeSelection>
+        <ReviewTypeSelection setReviewType  = {setReviewType}></ReviewTypeSelection>
       </Grid>
 
       <Grid item xs = "2">
@@ -200,24 +199,93 @@ return (
 
       <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
-          <Typography>Maintenance</Typography>
+          <Grid container justifyContent="center">
+
+            <Grid item xs = "12">
+              <Typography variant="h4">Maintenance:</Typography>
+            </Grid>
+            <br></br>
+            <br></br>
+            <br></br>
+            <Grid item xs = "12">
+              <Grid container justifyContent="center">
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5" color="common.white">Carlo Lobrutto:</Typography>
+                <Typography variant="body1">I was in the PAC spin studio and the pedal on one of the bikes broke clean off.</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5">Sam Rintche:</Typography>
+                <Typography variant="body1">In the middle of my usual push day last night and I decide to try come cable pulldowns. The rope looks 30 years old atleast.. get new ropes.</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5">Matthew Gartner:</Typography>
+                <Typography variant="body1">How has uw not replaced the leg extension machine on the second floor of PAC?? No handles?? ripped seats???</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              </Grid>
+            </Grid>
+
+          </Grid>
         </CardContent>
       </Card>
 
-      <Card sx={{ width: 1100, ml: 6 , mt: 5}} raised="true" style = {{backgroundColor : "#E4B429"}}>
+      <Card sx={{ width: 1100, ml: 6 , mt: 5, mb: 10}} raised="true" style = {{backgroundColor : "#E4B429"}}>
         <CardContent>
-          <Typography>Review</Typography>
+        <Grid item xs = "12">
+              <Typography variant="h4">Reviews and Questions:</Typography>
+            </Grid>
+            <br></br>
+        <Grid item xs = "12">
+              <Grid container justifyContent="center">
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5" color="common.white">Jaxson Summers:</Typography>
+                <Typography variant="body1">I tried out the spanish dancing class with my boyfriend and it was a blast, I'd recommend it for sure</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5">Rahul Modi:</Typography>
+                <Typography variant="body1">I grew up swimming and haven't been able to for the last couple years. I checked out the PAC pool and it's way nicer than I thought! I'll be back</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item xs>
+                <Card sx={{mr: 3}} raised="true" style = {{backgroundColor : "#FFFFFF"}}>
+                <CardContent>
+                <Typography variant="h5">Dev Patel:</Typography>
+                <Typography variant="body1">I switched over to a push pull legs split recently and I'm loving it, I'd recommend it if you're looking for a switch up</Typography>
+                </CardContent>
+                </Card>
+              </Grid>
+
+              </Grid>
+            </Grid>
         </CardContent>
       </Card>
-
-      <Card sx={{ width: 1100, ml: 6 , mt: 5, mb: 2}} raised="true" style = {{backgroundColor : "#E4B429"}}>
-        <CardContent>
-          <Typography>Concerns and Questions</Typography>
-        </CardContent>
-      </Card>
-
     </Grid>
   </Container>
+  </div>
+  <div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}>
   </div>
   </MuiThemeProvider>
   )

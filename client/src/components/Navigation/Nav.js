@@ -24,9 +24,9 @@ return(
     <Toolbar>
         <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../')}>Home</Button>
         <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../facilities')}>Facilities</Button>
-        <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../search')}>Insert</Button>
         <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../ReviewFacility')}>Review Facility</Button>
         <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../Filter')}>Filter</Button>
+        <Button style={{ fontSize: '20px' }} color="inherit" onClick={() => history.push('../Usage')}>Usage</Button>
         
     </Toolbar>
 </AppBar>

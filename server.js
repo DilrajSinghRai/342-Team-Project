@@ -86,9 +86,9 @@ app.post('/api/loadFilterData', (req, res) => {
 app.post('/api/addFacility', (req,res) => {
 
 	let connection = mysql.createConnection(config);
-	let sql = `INSERT INTO reviewFacility (facilityName, name, review) VALUE
+	let sql = `INSERT INTO reviewFacility (facilityName, name, review, reviewType) VALUE
 
-	 ("${req.body.facilityType}","${req.body.name}", '${req.body.review}');`
+	 ("${req.body.facilityType}","${req.body.name}", '${req.body.review}', '${req.body.reviewType}');`
 
 	 console.log(sql)
 
@@ -107,12 +107,12 @@ app.post('/api/addFacility', (req,res) => {
 
 });
 
+
+
 app.post('/api/addFilter', (req,res) => {
 
 	let connection = mysql.createConnection(config);
-	let sql = `INSERT INTO filter (facility, sport, day) VALUE
-
-	 ("${req.body.facilityName}","${req.body.sport}", '${req.body.day}');`
+	let sql = `INSERT INTO filter (facility, sport, day) VALUE ("${req.body.facilityName}","${req.body.sport}", '${req.body.day}');`
 
 	 console.log(sql)
 
