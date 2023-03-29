@@ -19,10 +19,10 @@ app.post('/api/loadUserSettings', (req, res) => {
 	let connection = mysql.createConnection(config);
 	let userID = req.body.userID;
 
-	let sql = `SELECT mode FROM user WHERE userID = ?`;
+	let sql = 'SELECT mode FROM user WHERE userID = ?';
 	console.log(sql);
 	let data = [userID];
-	console.log(data);
+	console.log("API REACHED");
 
 	connection.query(sql, data, (error, results, fields) => {
 		if (error) {
@@ -41,7 +41,7 @@ app.post('/api/loadFacilityInfo', (req, res) => {
 	let connection = mysql.createConnection(config);
 	console.log('called')
 
-	let sql = `SELECT * FROM d3rai.facilitiesTable`;
+	let sql = 'SELECT * FROM d3rai.facilitiesTable';
 	
 
 	connection.query(sql, (error, results, fields) => {
@@ -57,9 +57,79 @@ app.post('/api/loadFacilityInfo', (req, res) => {
 		res.send({ express: string });
 	});
 	connection.end();
-});  
+}); 
+
+app.post('/api/loadFilterData', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+	console.log('called')
+
+	let sql = 'SELECT openTimes FROM d3rai.filterData WHERE facilityName = ?, sport = ?, day = ?';
+	let data = [req.body.facilityName, req.body.sport, req.body.day];
+	
+
+	connection.query(sql, (error, results, fields) => {
+		console.log('here')
+		if (error) {
+			return console.error(error.message);
+		}
+
+		let string = JSON.stringify(results);
+		//let obj = JSON.parse(string);
+		console.log( results)
+		console.log(string)
+		res.send({ express: string });
+	});
+	connection.end();
+}); 
+
+app.post('/api/addFacility', (req,res) => {
+
+	let connection = mysql.createConnection(config);
+	let sql = `INSERT INTO reviewFacility (facilityName, name, review, reviewType) VALUE
+
+	 ("${req.body.facilityType}","${req.body.name}", '${req.body.review}', '${req.body.reviewType}');`
+
+	 console.log(sql)
 
 
+	connection.query(sql,(error, results, fields) => {
+		if (error){
+			return console.error(error.message);
+		}
+		let string = JSON.stringify(results)
+		res.send({express: string})
+
+	});
+
+	connection.end();
+
+
+});
+
+
+
+app.post('/api/addFilter', (req,res) => {
+
+	let connection = mysql.createConnection(config);
+	let sql = `INSERT INTO filter (facility, sport, day) VALUE ("${req.body.facilityName}","${req.body.sport}", '${req.body.day}');`
+
+	 console.log(sql)
+
+
+	connection.query(sql,(error, results, fields) => {
+		if (error){
+			return console.error(error.message);
+		}
+		let string = JSON.stringify(results)
+		res.send({express: string})
+
+	});
+
+	connection.end();
+
+
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
 //app.listen(port, '129.97.25.211'); //for the deployed version, specify the IP address of the server

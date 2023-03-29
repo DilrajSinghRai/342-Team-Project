@@ -5,6 +5,8 @@ import Home from '../Home';
 import history from './history';
 import landing from '../Landing'
 import ReviewFacility from "../ReviewFacility";
+import Filter from "../Filter";
+import Usage from "../Usage";
 
 
 export default function PrivateRoute({
@@ -18,6 +20,8 @@ export default function PrivateRoute({
       <Route path="/" exact component={landing} />
       <Route path="/facilities" exact component={Facilities} />
       <Route path="/ReviewFacility" exact component={ReviewFacility} />
+      <Route path="/Filter" exact component={Filter} />
+      <Route path="/Usage" exact component={Usage} />
       </Switch>
     </Router>
   );

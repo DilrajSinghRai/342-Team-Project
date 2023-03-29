@@ -1,70 +1,80 @@
 import Grid from "@material-ui/core/Grid";
+import React, { useState } from 'react'
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import {FormControl, MenuItem, Select, InputLabel, TextField, RadioGroup, FormLabel, Radio, FormControlLabel, Button, FormHelperText} from "@material-ui/core/"
-import React from "react"; 
+import {FormControl, MenuItem, Select, InputLabel, CardContent, TextField, RadioGroup, FormLabel, Radio, FormControlLabel, Button, FormHelperText} from "@material-ui/core/"
+
+
 import NavBar from "../Navigation/Nav";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles"; 
+import background from "C:/Users/prana/Documents/GitHub/342-Team-Project/client/src/pacgym2.png";
 
 const fetch = require("node-fetch");
 
 const opacityValue = 0.9;
 
 const theme = createTheme({
+  typography: {
+    color: "white"
+  },
   palette: {
     type: 'dark',
     background: {
-      default: "#000000"
+      default: "#FFFFFF"
     },
     primary: {
-      main: "#FFFFAA",
+      main: "#E4B429",
     },
     secondary: {
       main: "#E4B429",
     },
   },
 });
-
-const styles = theme => ({
-  root: {
-    body: {
-      backgroundColor: "#000000",
+  
+  const styles = theme => ({
+    root: {
+      body: {
+        backgroundColor: "#000000",
+        opacity: opacityValue,
+        overflow: "hidden",
+      },
+    },
+    mainMessage: {
       opacity: opacityValue,
+    },
+  
+    mainMessageContainer: {
+      marginTop: "20vh",
+      marginLeft: theme.spacing(20),
+      [theme.breakpoints.down('xs')]: {
+        marginLeft: theme.spacing(4),
+      },
+    },
+    paper: {
       overflow: "hidden",
     },
-  },
-  mainMessage: {
-    opacity: opacityValue,
-  },
-
-  mainMessageContainer: {
-    marginTop: "20vh",
-    marginLeft: theme.spacing(20),
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: theme.spacing(4),
+    message: {
+      opacity: opacityValue,
+      maxWidth: 250,
+      paddingBottom: theme.spacing(2),
     },
-  },
-  paper: {
-    overflow: "hidden",
-  },
-  message: {
-    opacity: opacityValue,
-    maxWidth: 250,
-    paddingBottom: theme.spacing(2),
-  },
-
-});
-
-
-
-
+  
+  });
 
 const serverURL = ''
  export default function Facilities(){
 
+  const [facilityInfo, setfacilityInfo] = useState([])
+
 React.useEffect(() => {
   loadFacilities();
+
+})
+
+React.useEffect(() => {
+
+  console.log(facilityInfo)
 })
 
 const loadFacilities = () => {
@@ -73,7 +83,7 @@ const loadFacilities = () => {
   .then(res => {
       var parsed = JSON.parse(res.express);
       console.log(parsed)
-      DisplayUpdates(parsed)
+      setfacilityInfo(parsed)
     }
   ).then(console.log())
 }
@@ -95,7 +105,40 @@ const DisplayUpdates = (facilityList) =>{
   return(
     <div>
 
-      {facilityList.facilityID}
+{facilityInfo.map((item) => {
+            return (
+              <div>
+
+
+                <br></br>
+
+
+                <CardContent>
+
+          <Typography variant="h5">
+            Name: {item.facilityType}
+          </Typography>
+          <Typography variant="h6">
+            Hours: {item.hours}
+          </Typography>
+          <Typography variant="h6" component="div">
+            Gender Status: {item.genderExclusivity}
+          </Typography>
+          <Typography variant="h6">
+            Description: {item.description}
+            <br />
+          </Typography>
+          
+
+        </CardContent>
+
+               
+
+
+                <br></br>
+              </div>
+            )
+          })}
     </div>
   )
   }
@@ -103,8 +146,7 @@ const DisplayUpdates = (facilityList) =>{
 
 const FacilitySelection = (props) =>{
   return(
-    
-    <ormControl style={{marginBottom: "600px", width: "30%"}}>
+    <ormControl style={{marginBottom: "600px", marginLeft: "15px", width: "15%"}}>
         <InputLabel id="movieValue">Select A Facility</InputLabel>
         <Select
           displayEmpty
@@ -129,7 +171,7 @@ const FacilitySelection = (props) =>{
 
   const OpenHouseSports = (props) =>{
     return(
-    <FormControl style={{marginBottom: "400px", marginLeft:" 300px", width: "30%"}}>
+    <FormControl style={{marginBottom: "400px", marginLeft:" 50px", width: "15%"}}>
           <InputLabel id="movieValue">Select A Open House Sport</InputLabel>
           <Select
             displayEmpty
@@ -152,11 +194,50 @@ const FacilitySelection = (props) =>{
 
 
   
-}
+  }
+    const StudyRoomName = (props) =>{
+      return(
+      <FormControl style={{marginBottom: "200px", marginLeft:" 300px", width: "30%"}}>
+            <InputLabel id="movieValue">Select what study room </InputLabel>
+            <Select
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Study Room Pac</MenuItem>
+              <MenuItem value={20}>Study Room SLC</MenuItem>
+            </Select>
+            <FormHelperText error>{props.Error ? "Please select the study room" : ""}</FormHelperText>
+          </FormControl>
+      )
+      }
+
+
+
+const StudyRoomStatus = (props) =>{
+  return(
+  <FormControl style={{marginTop: "200px", marginRight:"400px", width: "30%"}}>
+        <InputLabel id="movieValue">Select the status of the study room </InputLabel>
+        <Select
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Open</MenuItem>
+          <MenuItem value={20}>Closed</MenuItem>
+        </Select>
+        <FormHelperText error>{props.Error ? "Please select if it is closed or open" : ""}</FormHelperText>
+      </FormControl>
+  )
+  }
 
 const FacilityTime = (props) =>{
   return(
-  <FormControl style={{marginBottom: "300px", marginLeft:" 200px", width: "30%"}}>
+  <FormControl style={{marginBottom: "300px", marginLeft:" 50px", width: "30%"}}>
     
         <InputLabel id="movieValue">Select A Time Period</InputLabel>
         <Select
@@ -178,11 +259,8 @@ const FacilityTime = (props) =>{
 
 ///////ACTUAL DISPLAY
 return (
-
-
-
-
-<div><NavBar></NavBar>
+<MuiThemeProvider>
+<div style={{ backgroundImage: `url(${background})`, height:"100vh", backgroundPosition: 'center'}}><NavBar></NavBar>
 <CssBaseline />
            
             
@@ -192,12 +270,16 @@ return (
     <div><FacilitySelection></FacilitySelection>
     <OpenHouseSports></OpenHouseSports>
     <FacilityTime></FacilityTime>
-    
+    <StudyRoomStatus></StudyRoomStatus>
+   
+   
+    <StudyRoomName></StudyRoomName>
     <DisplayUpdates>
       
       </DisplayUpdates></div>
    
     </div>
+    </MuiThemeProvider>
   )
 
 
